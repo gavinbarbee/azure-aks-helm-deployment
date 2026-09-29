@@ -1,0 +1,15 @@
+Release {{ .Release.Name }} deployed.
+{{- if .Values.ingress.enabled }}
+
+Your app is exposed via Ingress on host: {{ .Values.ingress.host }}
+
+1. Get the ingress controller's external IP:
+   kubectl get service ingress-nginx-controller -n ingress-nginx
+
+2. Reach the app (the Host header is what routes you):
+   curl.exe -H "Host: {{ .Values.ingress.host }}" http://<EXTERNAL-IP>
+{{- else }}
+
+Port-forward to reach the app locally:
+   kubectl port-forward svc/{{ include "webapp.fullname" . }} 8080:{{ .Values.service.port }}
+{{- end }}

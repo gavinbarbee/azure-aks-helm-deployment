@@ -1,0 +1,14 @@
+# Terraform
+terraform.tfvars
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+
+# Helm package output
+*.tgz
+
+# Claude Code
+CLAUDE.md
+.claude/

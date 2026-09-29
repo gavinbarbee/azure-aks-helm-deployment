@@ -1,0 +1,43 @@
+replicaCount: 2
+
+image:
+  repository: traefik/whoami
+  tag: "v1.10.2"
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: nginx
+  host: webapp.local
+  path: /
+  pathType: Prefix
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+probes:
+  path: /
+
+config:
+  WELCOME_MESSAGE: "Hello from Helm on AKS"
+
+secret:
+  apiKey: "change-this-please"
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 60
